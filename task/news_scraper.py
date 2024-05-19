@@ -1,6 +1,5 @@
 import os
 from datetime import datetime, timedelta
-from RPA.Robocloud.Items import Items
 from task.browser_handler import BrowserHandler
 from task.data_extractor import DataExtractor
 from task.file_handler import FileHandler
@@ -12,23 +11,25 @@ logger = logging.getLogger(__name__)
 
 class NewsScraperBot:
     def __init__(self):
-        self.work_items = Items()
         self.browser_handler = BrowserHandler()
         self.data_extractor = DataExtractor()
         self.file_handler = FileHandler()
 
 
     def get_parameters(self):
-        try:
-            self.work_items.get_input_work_item()
-            params = self.work_items.get_work_item_variables()
-        except KeyError as e:
-            logger.warning(f"Missing environment variable: {e}. Using local devdata/input.json for parameters.")
+        
+        # try:
+        #     self.work_items.get_input_work_item()
+        #     params = self.work_items.get_work_item_variables()
+        #     print(params)
+        # except KeyError as e:
+        #     logger.warning(f"Missing environment variable: {e}. Using local devdata/input.json for parameters.")
 
-            # Simulate work item parameters for local testing
-            import json
-            with open('devdata/input.json') as f:
-                params = json.load(f)
+        # Simulate work item parameters for local testing
+        
+        import json
+        with open('devdata/input.json') as f:
+            params = json.load(f)
         
         self.search_phrase = params.get('search_phrase', 'technology')
         self.news_category = params.get('news_category', 'latest')
